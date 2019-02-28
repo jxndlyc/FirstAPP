@@ -24,7 +24,7 @@
         <activity
             android:name=".BaseRnActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name=".MyNativePage"></activity>
+        <activity android:name=".MyNativePageActivity"></activity>
     </application>
 
 </manifest>

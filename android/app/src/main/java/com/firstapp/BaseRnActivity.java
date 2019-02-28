@@ -9,6 +9,8 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.common.LifecycleState;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
+import com.firstapp.custompackage.ImageViewPackage;
+import com.firstapp.custompackage.MyReactPackage;
 
 
 public class BaseRnActivity extends Activity implements DefaultHardwareBackBtnHandler {
@@ -24,6 +26,7 @@ public class BaseRnActivity extends Activity implements DefaultHardwareBackBtnHa
                 .setJSMainModulePath("index")
                 .addPackage(new MainReactPackage())
                 .addPackage(new MyReactPackage())//注册包名
+                .addPackage(new ImageViewPackage())//注册包名
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();

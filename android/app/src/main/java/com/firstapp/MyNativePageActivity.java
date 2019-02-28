@@ -15,7 +15,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 
-public class MyNativePage extends AppCompatActivity {
+public class MyNativePageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

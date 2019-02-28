@@ -1,4 +1,4 @@
-package com.firstapp;
+package com.firstapp.module;
 
 /**
  * Created by liuyuchuan on 2019/2/27.

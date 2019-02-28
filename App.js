@@ -7,7 +7,17 @@
  */
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Text, View, Dimensions, TextInput, TouchableOpacity} from 'react-native';
+import {
+    AppRegistry,
+    StyleSheet,
+    Text,
+    View,
+    Dimensions,
+    TextInput,
+    TouchableOpacity,
+    UIManager,
+    findNodeHandle
+} from 'react-native';
 
 import LifecycleComponent from './LifecycleComponent';
 import EIComponent, {name, age, sum} from './EIComponent';
@@ -17,10 +27,12 @@ import RefTest from './RefTest';
 import Student from './Student';
 import MingStudent from "./MingStudent";
 import IntentMoudle from './IntentMoudle'
+import RCTGIFView from './RCTGIFView';
 
 
 type Props = {};
 let widthOfMargin = Dimensions.get('window').width * 0.05;
+
 export default class App extends Component<Props> {
 
     constructor(props) {
@@ -30,7 +42,8 @@ export default class App extends Component<Props> {
             result: '',
             size: 0,
             inputedNum: '',
-            inputedPW: ''
+            inputedPW: '',
+            image: 'http://img.loock.cn/test0117.jpg'
         }
         this.stu = new Student('小红', '女', '18');
         this.mingStu = new MingStudent();
@@ -54,8 +67,17 @@ export default class App extends Component<Props> {
     }
 
     _newNativeActivity() {
-        IntentMoudle.startActivityFromJS("com.firstapp.MyNativePage", "hello form RN ");
+        IntentMoudle.startActivityFromJS("com.firstapp.MyNativePageActivity", "hello form RN ");
         //IntentMoudle.test("com.firstapp.MyNativePage");
+    }
+
+    sendNotification() {
+        //向native层发送命令
+        UIManager.dispatchViewManagerCommand(
+            findNodeHandle(this.refs.RCTImageView),
+            UIManager.RCTImageView.Commands.handleTask, // Commands后面的值与原生层定义的HANDLE_METHOD_NAME一致
+            [name] // 向原生层传递的参数数据,数据形如：["第一个参数","第二个参数",3]
+        );
     }
 
     render() {
@@ -77,6 +99,14 @@ export default class App extends Component<Props> {
                 <TouchableOpacity onPress={this._newNativeActivity}>
                     <Text style={styles.hello}>New Native Activity</Text>
                 </TouchableOpacity>
+
+                <RCTGIFView
+                    style={styles.image}
+                    imageName={this.state.image}
+                    onClick={(msg) => alert('原生层传递的数据为：', msg)}
+
+                />
+
 
                 {/*<RefTest
                     ref="reftest"
@@ -161,6 +191,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         margin: 10,
+    },
+    image: {
+        marginStart: 4,
+        width: 100,
+        height: 100,
     },
 });
 AppRegistry.registerComponent('FirstApp', () => App);
