@@ -16,18 +16,22 @@ import {
     TextInput,
     TouchableOpacity,
     UIManager,
-    findNodeHandle
+    findNodeHandle,
+    Button,
+    TouchableHighlight,
+    Navigator
 } from 'react-native';
 
-import LifecycleComponent from './LifecycleComponent';
-import EIComponent, {name, age, sum} from './EIComponent';
-import PropsTest from './PropsTest';
-import StateTest from './StateTest';
-import RefTest from './RefTest';
-import Student from './Student';
-import MingStudent from "./MingStudent";
+import LifecycleComponent from './test/LifecycleComponent';
+import EIComponent, {name, age, sum} from './test/EIComponent';
+import PropsTest from './test/PropsTest';
+import StateTest from './test/StateTest';
+import RefTest from './test/RefTest';
+import Student from './test/Student';
+import MingStudent from "./test/MingStudent";
 import IntentMoudle from './IntentMoudle'
-import RCTGIFView from './RCTGIFView';
+import RCTGIFView from './test/RCTGIFView';
+//import { StackNavigator } from 'react-navigation';
 
 
 type Props = {};
@@ -69,6 +73,10 @@ export default class App extends Component<Props> {
     _newNativeActivity() {
         IntentMoudle.startActivityFromJS("com.firstapp.MyNativePageActivity", "hello form RN ");
         //IntentMoudle.test("com.firstapp.MyNativePage");
+        /*IntentMoudle.handleCallback('i will be print', (msg) => {
+            console.log(msg);
+            Alert.alert("-----");
+        });*/
     }
 
     sendNotification() {
@@ -80,13 +88,40 @@ export default class App extends Component<Props> {
         );
     }
 
-    render() {
-        return (
-            <View style={styles.container}>
+    clickJump() {
+        const {navigator} = this.props;
+        if (navigator) {
+            navigator.push({　　//navigator.push 传入name和你想要跳的组件页面
+                name: "LifecycleComponent",
+                component: LifecycleComponent
+            });
+        }
+    }
 
-                <Text style={{fontSize: 20, backgroundColor: 'red', padding: 10,}}
+    render() {
+        let defaultName = 'App';
+        let defaultComponent = LifecycleComponent;
+        return (
+
+            <View style={styles.container}>
+                {/*<Navigator
+                    initialRoute={{name: defaultName, component: defaultComponent}}  //初始化导航器Navigator,指定默认的页面
+                    configureScene={
+                        (route) => {
+                            return Navigator.SceneConfigs.FloatFromRight;　　//配置场景动画，页面之间跳转时候的动画
+                        }
+                    }
+                    renderScene={
+                        (route, navigator) => {
+                            let Component = route.component;
+                            return <Component{...route.params} navigator={navigator}/>　　//渲染场景
+                        }
+                    }
+                />*/}
+
+                <Text style={{fontSize: 20, backgroundColor: 'red', padding: 5,}}
                 >{this.stu.getDescription()}</Text>
-                <Text style={{fontSize: 20, backgroundColor: 'red', padding: 10,}}
+                <Text style={{fontSize: 20, backgroundColor: 'red', padding: 5,}}
                 >{this.mingStu.getDescription()}</Text>
 
                 <TextInput style={styles.textInputStyle} placeholder={'请输入手机号'}
@@ -107,6 +142,18 @@ export default class App extends Component<Props> {
 
                 />
 
+                <TouchableHighlight
+                    underlayColor="rgb(180,135,250)"
+                    activeOpacity={0.5}
+                    style={{
+                        borderRadius: 8,
+                        padding: 8,
+                        marginTop: 8,
+                        backgroundColor: "#F30"
+                    }}
+                    onPress={this.clickJump.bind(this)}>
+                    <Text>点击进入第二个页面</Text>
+                </TouchableHighlight>
 
                 {/*<RefTest
                     ref="reftest"
@@ -198,4 +245,6 @@ const styles = StyleSheet.create({
         height: 100,
     },
 });
+
+
 AppRegistry.registerComponent('FirstApp', () => App);

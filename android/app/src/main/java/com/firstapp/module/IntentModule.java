@@ -14,6 +14,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
 public class IntentModule extends ReactContextBaseJavaModule {
+    private static final String TAG = IntentModule.class.getName();
     public IntentModule(ReactApplicationContext reactContext) {
         super(reactContext);
     }
@@ -43,6 +44,14 @@ public class IntentModule extends ReactContextBaseJavaModule {
     public void test(String name) {
         Log.e("test", name);
     }
+
+    /*@ReactMethod
+    public void handleCallback(String msg, Callback callback) {
+        Log.i(TAG, "handleCallback: msg:" + msg);
+        Log.i(TAG, "开始回调 js");
+            callback.invoke(msg);
+    }*/
+
 }
 //注意：记住getName方法中的命名名称，JS中调用需要
 //注意：startActivityFromJS方法添加RN注解(@ReactMethod)，否则该方法将不被添加到RN中
